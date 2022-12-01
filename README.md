@@ -1,9 +1,10 @@
 ## Laravel Task - Figured
 
-This is basic software to calculate the requested fertilizer price using a CSV file as a data resource. For this project I'm just reading the csv file not executing any changes inside. For a real scenario, I would update the file everytime the user apply a new request, or even better, I would save this on DB.
+This is basic software to calculate the requested fertilizer price using a CSV file as a data resource. For this project, I'm just reading the csv file not executing any changes inside. For a real scenario, I would update the file every time the user apply a new request, or even better, I would save this on DB.
 For this exercise, I created a basic Blade template with some Bootstrap, but no JS was used.
-To validate the value typed in the template part, I only used an input type number with a minimum value of 1 to avoid nulls or 0, but there are several validations at the server level.
-
+To validate the value typed in the template part, I just used an input type number with a minimum value of 1 to avoid nulls or 0, but there are several validations at the server level.
+The file responsible for the Business Logic is App\Services\InventoryService. There I handle with all requests, and only delivery the resulto to the Controller layer.
+Inside test path, I created 3 files of tests, 2 units to cover the scenarios on the service layer and 1 on feature, to test the request with the validations.
 
 * New paths for the structure
     - app
@@ -11,7 +12,7 @@ To validate the value typed in the template part, I only used an input type numb
         - Providers
             - AppServiceProvider.php: Interfaces Bind
         - Services: Layer between Controller and Model (Business)
-        - Requests: Request Validations
+        - Http/Requests: Request Validations
 
 * Used Stack:
     - Ubuntu 22.04
@@ -22,6 +23,7 @@ To validate the value typed in the template part, I only used an input type numb
     - Create .env file;
     - Run: composer install
     - To create a symbolic link in storage path: php artisan storage:link
+    - To run the tests: php artisan test
 
 * Routes: routes/web.php
     - Get:
