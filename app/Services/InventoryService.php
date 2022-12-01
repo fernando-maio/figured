@@ -16,22 +16,28 @@ class InventoryService implements InventoryInterface
         $this->csvService = $csvInterface;
     }
 
+    /** Main function of InventoryService */
     public function calculateApplication(int $quantity): string|bool
     {
+        /** First of all, I made a cleanning of the inventory, removing all lines that was already consumed from the CSV file. */
         $inventory = $this->cleanInventory();
 
+        /** Check if the Inventory have enought itens to be requested. Case the user request more than total, retun as false. */
         if (!self::checkInventoryQuantity($inventory, $quantity)) {
             return false;
         }
 
+        /** Here we calculate the ammount, according itens consumed by utem and their respective values. */
         $amount = $this->getAmount($inventory, $quantity);
         $fmt = new NumberFormatter( 'en_NZ', NumberFormatter::CURRENCY );
 
+        /** And then, we return a converted ammount as string format. ($123.45) */
         return $fmt->formatCurrency($amount, "NZD");
     }
 
     private function cleanInventory(): array|bool
     {
+        /** This method verify all Applycations, consuming oldest inventory first */
         $inventory = $this->checkApplyedDataFile();
 
         foreach ($inventory as $key => $value) {
